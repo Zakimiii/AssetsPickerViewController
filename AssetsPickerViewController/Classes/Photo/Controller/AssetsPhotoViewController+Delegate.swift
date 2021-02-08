@@ -24,9 +24,9 @@ extension AssetsPhotoViewController {
 
     @objc func pressedDone(button: UIBarButtonItem) {
         delegate?.assetsPicker(controller: picker, selected: selectedArray)
-        navigationController?.dismiss(animated: true, completion: {
-            self.delegate?.assetsPicker?(controller: self.picker, didDismissByCancelling: false)
-        })
+        // navigationController?.dismiss(animated: true, completion: {
+        //     self.delegate?.assetsPicker?(controller: self.picker, didDismissByCancelling: false)
+        // })
     }
 
     @objc func pressedTitle(gesture: UITapGestureRecognizer) {
