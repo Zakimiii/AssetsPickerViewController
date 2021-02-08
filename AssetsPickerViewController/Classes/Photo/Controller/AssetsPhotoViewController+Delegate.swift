@@ -10,25 +10,25 @@ import Photos
 
 // MARK: - UI Event Handlers
 extension AssetsPhotoViewController {
-    
+
     @objc func pressedCancel(button: UIBarButtonItem) {
         navigationController?.dismiss(animated: true, completion: {
             self.delegate?.assetsPicker?(controller: self.picker, didDismissByCancelling: true)
         })
         delegate?.assetsPickerDidCancel?(controller: picker)
     }
-    
+
     @objc func pressedCamera(button: UIBarButtonItem) {
         cameraPicker.requestTake(parent: self)
     }
-    
+
     @objc func pressedDone(button: UIBarButtonItem) {
+        delegate?.assetsPicker(controller: picker, selected: selectedArray)
         navigationController?.dismiss(animated: true, completion: {
             self.delegate?.assetsPicker?(controller: self.picker, didDismissByCancelling: false)
         })
-        delegate?.assetsPicker(controller: picker, selected: selectedArray)
     }
-    
+
     @objc func pressedTitle(gesture: UITapGestureRecognizer) {
         presentAlbumController()
     }
@@ -54,11 +54,11 @@ extension AssetsPhotoViewController: UIScrollViewDelegate {
 
 // MARK: - AssetsAlbumViewControllerDelegate
 extension AssetsPhotoViewController: AssetsAlbumViewControllerDelegate {
-    
+
     public func assetsAlbumViewControllerCancelled(controller: AssetsAlbumViewController) {
         logi("Cancelled.")
     }
-    
+
     public func assetsAlbumViewController(controller: AssetsAlbumViewController, selected album: PHAssetCollection) {
         select(album: album)
     }
@@ -82,7 +82,7 @@ extension AssetsPhotoViewController: UIContextMenuInteractionDelegate {
 // MARK - UIViewControllerPreviewingDelegate
 @available(iOS 9.0, *)
 extension AssetsPhotoViewController: UIViewControllerPreviewingDelegate {
-    
+
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         logi("\(location)")
         guard !isDragSelectionEnabled else { return nil }
@@ -94,7 +94,7 @@ extension AssetsPhotoViewController: UIViewControllerPreviewingDelegate {
         previewController.asset = fetchResult.object(at: pressingIndexPath.row)
         return previewController
     }
-    
+
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         logi("viewControllerToCommit: \(type(of: viewControllerToCommit))")
     }
